@@ -1,0 +1,9 @@
+# IDE
+.vscode/
+
+# Python specific files
+__pycache__/
+*.pyc
+
+# Environments
+venv/
