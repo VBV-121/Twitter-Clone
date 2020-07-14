@@ -1,0 +1,73 @@
+{% extends "layout.html" %}
+{% block content %}
+	
+		<style type="text/css">
+			.article-metadata {
+			  padding-bottom: 1px;
+			  margin-bottom: 4px;
+			  border-bottom: 1px solid #e3e3e3
+			}
+
+			.article-metadata a:hover {
+			  color: #333;
+			  text-decoration: none;
+			}
+			.article-content {
+			  white-space: pre-line;
+			}
+			.move-up{
+				margin-top: 10px
+			}
+		    hr {
+			  margin-top: 2px;
+			  margin-bottom: -5px;
+			  border: 2;
+			  border-top: 2px solid rgba(0, 0, 0, 0.1);
+			}
+			.img-size{
+				width: 4vw;
+		    	height: 4vw;
+		    	object-fit: cover;
+			}
+			.text-data-title{
+				margin-left: 10px;
+			}
+			.text-data{
+				margin-left: 70px;
+				margin-top: -15px;
+			}
+		</style>
+
+		<div class="card move-up">
+			<div class="card-body">
+				<img class="rounded-circle img-size account-img" src="{{ url_for('static', filename='profile_pics/'+ post.author.image_file) }}">
+				<a href="#" class="card-title text-data-title">{{ post.author.username }}</a>
+				<small class="card-title">{{ post.date_posted.strftime('%Y-%m-%d') }}</small>
+				{% if post.author == current_user %}
+					<a class="btn btn-secondary btn-sm m-1" href="{{ url_for('update_tweet',post_id=post.id) }}">
+					Update</a>
+					<button type="button" class="btn btn-danger btn-sm m-1" data-toggle="modal" data-target="#deleteModal">Delete</button>
+				{% endif %}
+				<p class="card-text text-data">{{ post.content }}</p>
+			</div>
+		</div>
+		
+		<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+		    <div class="modal-dialog" role="document">
+		      <div class="modal-content">
+		        <div class="modal-header">
+		          <h5 class="modal-title" id="deleteModalLabel">Delete Post?</h5>
+		          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		            <span aria-hidden="true">&times;</span>
+		          </button>
+		        </div>
+		        <div class="modal-footer">
+		          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		          <form action="{{ url_for('delete_tweet',post_id=post.id) }}" method="Post">
+		            <input class="btn btn-danger" type="submit" value="Delete">
+		          </form>
+		        </div>
+		      </div>
+		    </div>
+		</div>
+{% endblock content %}

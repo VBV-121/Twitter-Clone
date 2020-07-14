@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+{% block content %}
+	<style type="text/css">
+		.move-up{
+				margin-top: 10px
+			}
+		.move-down{
+			margin-bottom: 30px
+		}
+	</style>
+	<div class="card move-up">
+		<div class="card-body">
+			<div class="content-section">
+				<form method="POST" action="">
+					{{ form.hidden_tag() }}
+					<fieldset class="form-group">
+						<legend class="border-bottom mb-4">{{ legend }}</legend>
+						<h1>What's Happening?</h1>
+						<div class="form-group">
+							{% if form.content.errors %}
+								{{ form.content(class="form-control form-control-lg is-invalid") }}
+								<div class="invalid-feedback">
+									{% for error in form.content.errors %}
+										<span>{{ error }}</span>
+									{% endfor %}
+								</div>
+							{% else %}
+								{{ form.content(class="form-control form-control-lg") }}
+							{% endif %}
+						</div>
+					</fieldset>
+					<div class="form-group">
+						{{ form.submit(class="btn btn-primary") }}
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+{% endblock content %}
