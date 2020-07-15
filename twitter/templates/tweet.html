@@ -41,7 +41,7 @@
 		<div class="card move-up">
 			<div class="card-body">
 				<img class="rounded-circle img-size account-img" src="{{ url_for('static', filename='profile_pics/'+ post.author.image_file) }}">
-				<a href="#" class="card-title text-data-title">{{ post.author.username }}</a>
+				<a href="{{ url_for('user_tweets',username=i.author.username) }}" class="card-title text-data-title">{{ post.author.username }}</a>
 				<small class="card-title">{{ post.date_posted.strftime('%Y-%m-%d') }}</small>
 				{% if post.author == current_user %}
 					<a class="btn btn-secondary btn-sm m-1" href="{{ url_for('update_tweet',post_id=post.id) }}">
