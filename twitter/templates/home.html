@@ -1,62 +1,74 @@
 {% extends "layout.html" %}
 {% block content %}
-	{% for i in posts.items %}
-		<style type="text/css">
-			.article-metadata {
-			  padding-bottom: 1px;
-			  margin-bottom: 4px;
-			  border-bottom: 1px solid #e3e3e3
-			}
 
-			.article-metadata a:hover {
-			  color: #333;
-			  text-decoration: none;
-			}
-			.article-content {
-			  white-space: pre-line;
-			}
-			.move-up{
-				margin-top: 10px
-			}
-		    hr {
-			  margin-top: 2px;
-			  margin-bottom: -5px;
-			  border: 2;
-			  border-top: 2px solid rgba(0, 0, 0, 0.1);
-			}
-			.img-size{
-				width: 4vw;
-		    	height: 4vw;
-		    	object-fit: cover;
-			}
-			.text-data-title{
-				margin-left: 10px;
-			}
-			.text-data{
-				margin-left: 70px;
-				margin-top: -15px;
-			}
-		</style>
+<div class="row p-1 pl-3" style="border-bottom: 1px solid lightgray">
+	<h4><b>Home</b></h4>
+</div>
 
-		<div class="card move-up">
-			<div class="card-body">
-				<img class="rounded-circle img-size account-img" src="{{ url_for('static', filename='profile_pics/'+i.author.image_file) }}">
-				<a href="{{ url_for('user_tweets',username=i.author.username) }}" class="card-title text-data-title">{{ i.author.username }}</a>
-				<small class="card-title">{{ i.date_posted.strftime('%Y-%m-%d') }}</small>
-				<p class="card-text text-data"><a href="{{ url_for('tweet',post_id=i.id) }}">{{ i.content }}</a></p>
+<div class="row p-1 pl-3 mt-2 mb-3" id="homeTweetSection">
+	<div class="media col-12">
+		<img class="mr-2 img-fluid" src="{{ url_for('static', filename='images/logo.png') }}" width="100" height="100"
+			alt="User proflie pic">
+		<div class="media-body pb-3 align-self-center">
+			<div class="row ml-2">
+				<input type="text" placeholder="What's happening?">
+			</div>
+			<div class="row ml-2">
+				<span class="text-primary">Everyone can reply</span>
+			</div>
+			<div class="row ml-2 mt-2 mr-0 align-items-center">
+				<i class="col-1 pl-0 ml-0 fas fa-lg fa-image text-primary"> </i>
+				<i class="col-1 pl-1 fas fa-lg fa-image text-primary"> </i>
+				<i class="col-1 pl-2 fas fa-lg fa-image text-primary"> </i>
+				<i class="col-1 pl-2 ml-1 fas fa-lg fa-image text-primary"> </i>
+				<i class="col-1 pl-2 ml-1 fas fa-lg fa-image text-primary"> </i>
+				<button class="ml-auto btn btn-primary">Tweet</button>
 			</div>
 		</div>
-	{% endfor %}
-	{% for page_num in posts.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
-	    {% if page_num %}
-	      {% if posts.page == page_num %}
-	        <a class="btn btn-info mb-4" href="{{ url_for('home',page=page_num) }}">{{ page_num }}</a>
-	      {% else %}
-	        <a class="btn btn-outline-info mb-4" href="{{ url_for('home',page=page_num) }}">{{ page_num }}</a>
-	      {% endif %}
-	    {% else %}
-	      ...
-	    {% endif %}
-	{% endfor %}
-	
+	</div>
+</div>
+
+<div class="row">
+	<div class="card mt-5 p-0 col-12"
+		style="border: none; border-top: 1px solid lightgray; border-bottom: 1px solid lightgray">
+		<ul class="list-group list-group-flush">
+			{% for i in posts.items %}
+			<li class="list-group-item">
+				<div class="media">
+					<img class="mr-2 img-fluid"
+						src="{{ url_for('static', filename='profile_pics/'+i.author.image_file) }}" width="50"
+						height="50" alt="Generic placeholder image">
+					<div class="media-body">
+						<p class="mt-0 text-muted">
+							<a href="{{ url_for('user_tweets',username=i.author.username) }}"
+								class="card-title text-data-title">{{ i.author.username }}</a>
+						</p>
+						<p class="card-text text-data">
+							<a href="{{ url_for('tweet',post_id=i.id) }}">{{ i.content }}
+							</a>
+						</p>
+					</div>
+				</div>
+			</li>
+			{% endfor %}
+		</ul>
+	</div>
+</div>
+
+<div class="row mt-4 p-2">
+	<div class="ml-auto col-*">
+		{% for page_num in posts.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+		{% if page_num %}
+		{% if posts.page == page_num %}
+		<a class="btn btn-info mb-4" href="{{ url_for('home',page=page_num) }}">{{ page_num }}</a>
+		{% else %}
+		<a class="btn btn-outline-info mb-4" href="{{ url_for('home',page=page_num) }}">{{ page_num }}</a>
+		{% endif %}
+		{% else %}
+		...
+		{% endif %}
+		{% endfor %}
+	</div>
+</div>
+
 {% endblock content %}
