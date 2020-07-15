@@ -1,0 +1,30 @@
+/* Remove the navbar's default margin-bottom and rounded borders */
+a {
+    text-decoration: none;
+    color: black;
+}
+
+.sidebar {
+    position: sticky;
+    padding: 1em !important;
+    border-right: 1px solid lightgray;
+    border-left: 1px solid lightgray;
+}
+
+.sidebar .nav .nav-item .nav-link:hover {
+    color: blue;
+    background-color: lightblue;
+    border-radius: 5px;
+}
+
+.sidebar .nav .nav-item .nav-link span i {
+    width: 1.5em;
+    max-width: 1.5em;
+}
+
+#homeTweetSection .media .media-body input {
+    border: none;
+    width: 100%;
+    max-width: 100%;
+    padding: 1em 0em;
+}
