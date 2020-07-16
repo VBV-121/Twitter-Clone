@@ -10,8 +10,10 @@
 		<img class="mr-2 img-fluid" src="{{ url_for('static', filename='images/logo.png') }}" width="50" height="50"
 			alt="User proflie pic">
 		<div class="media-body t-0 pb-3 align-self-center">
+			<form method="POST" action="">
+			{{ form.hidden_tag() }}
 			<div class="row ml-2">
-				<input type="text" placeholder="What's happening?">
+				{{ form.content(class="form-control form-control-lg",placeholder="What's happening?",type="text") }}
 			</div>
 			<div class="row ml-2">
 				<span class="text-primary">Everyone can reply</span>
@@ -22,8 +24,11 @@
 				<i class="col-1 pl-2 fas fa-lg fa-image text-primary"> </i>
 				<i class="col-1 pl-2 ml-1 fas fa-lg fa-image text-primary"> </i>
 				<i class="col-1 pl-2 ml-1 fas fa-lg fa-image text-primary"> </i>
-				<button class="ml-auto btn btn-primary">Tweet</button>
+				<div class="form-group">
+					{{ form.submit(class="ml-4 btn btn-primary") }}
+				</div>
 			</div>
+			</form>
 		</div>
 	</div>
 </div>

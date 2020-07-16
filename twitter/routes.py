@@ -22,11 +22,19 @@ from flask_login import login_user, current_user, logout_user, login_required
 
 @app.route("/")
 
-@app.route("/home")
+@app.route("/home",methods=['GET','POST'])
 def home():
+	form = TweetForm()
+	if form.validate_on_submit():
+		post = Post(content=form.content.data, author= current_user)
+		db.session.add(post)
+		db.session.commit()
+		print('got in home')
+		flash(f'Your tweet has been posted!','success')
+		return redirect(url_for('home'))
 	page = request.args.get('page',1,type=int)
 	posts = Post.query.order_by(Post.date_posted.desc()).paginate(page=page, per_page=5)
-	return render_template("home.html",posts=posts)
+	return render_template("home.html",posts=posts,form=form)
 
 @app.route("/about")
 def about():
@@ -150,3 +158,23 @@ def user_tweets(username):
     user=User.query.filter_by(username=username).first_or_404()
     posts = Post.query.filter_by(author=user).order_by(Post.date_posted.desc()).paginate(page=page,per_page=3)
     return render_template("user_tweets.html",posts=posts,user=user)
+
+@app.route("/explore")
+def explore():
+	return render_template("explore.html",title="Explore")
+
+@app.route("/notifications")
+def notifications():
+	return render_template("notifications.html",title="Notification")
+
+@app.route("/messages")
+def messages():
+	return render_template("messages.html",title="Messages")
+
+@app.route("/bookmarks")
+def bookmarks():
+	return render_template("bookmarks.html",title="Bookmarks")
+
+@app.route("/lists")
+def lists():
+	return render_template("lists.html",title="Lists")
