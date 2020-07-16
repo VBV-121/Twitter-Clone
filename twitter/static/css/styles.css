@@ -1,0 +1,59 @@
+a {
+    text-decoration: none;
+    color: black;
+}
+
+a, i {
+    cursor: pointer
+}
+
+.sidebar {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    padding: 1em !important;
+    border-right: 1px solid lightgray;
+    border-left: 1px solid lightgray;
+}
+
+.sidebar .nav .nav-item .nav-link:hover {
+    color: blue;
+    background-color: #e6e6ff;
+    border-radius: 5px;
+}
+
+.sidebar .nav .nav-item .nav-link span i {
+    width: 1.5em;
+    max-width: 1.5em;
+}
+
+.sidebar .nav .nav-item a.btn {
+    width: 100%;
+    max-width: 100%;
+}
+
+.home-heading {
+    border-bottom: 1px solid lightgray
+}
+
+#homeTweetSection .media .media-body input {
+    border: none;
+    width: 100%;
+    max-width: 100%;
+    padding: 0.5em 0em;
+}
+
+#followingTweets .card {
+    border: none;
+    border-top: 1px solid lightgray; 
+    border-bottom: 1px solid lightgray
+}
+
+#followingTweets .card .list-group .list-group-item{
+    border-radius: 0px;
+}
+
+#followingTweets .card .list-group .list-group-item:hover{
+    background-color: #f2f2f2;
+    cursor: pointer;
+}
