@@ -1,6 +1,6 @@
 import secrets
 import os
-from PIL import Image 
+from PIL import Image
 from flask import render_template, url_for, flash, redirect, request, abort
 from twitter import app, db, bcrypt
 from twitter.forms import RegistrationForm, LoginForm, UpdateAccountForm, TweetForm
@@ -83,8 +83,11 @@ def profile():
 	form = UpdateAccountForm()
 	if form.validate_on_submit():
 		if form.picture.data:
-			picture_file = save_picture(form.picture.data)
-			current_user.image_file = picture_file
+			if form.picture.data.filename == "default.jpg":
+				current_user.image_file = "default.jpg"
+			else:
+				picture_file = save_picture(form.picture.data)
+				current_user.image_file = picture_file
 		current_user.username = form.username.data
 		current_user.email = form.email.data
 		db.session.commit()
@@ -93,7 +96,7 @@ def profile():
 	elif request.method == 'GET':
 		form.username.data = current_user.username
 		form.email.data = current_user.email
-	image_file = url_for('static',filename='profile_pics/'+current_user.image_file) 
+	image_file = url_for('static',filename='profile_pics/'+current_user.image_file)
 	return render_template('profile.html',title='Profile', image_file=image_file,form=form)
 
 @app.route('/tweet/new',methods=['GET','POST'])
