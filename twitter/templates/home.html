@@ -1,15 +1,15 @@
 {% extends "layout.html" %}
 {% block content %}
 
-<div class="row p-1 pl-3" style="border-bottom: 1px solid lightgray">
+<div class="row p-1 pt-3 pl-3 home-heading">
 	<h4><b>Home</b></h4>
 </div>
 
-<div class="row p-1 pl-3 mt-2 mb-3" id="homeTweetSection">
+<div class="row p-1 pt-3 pl-3 mt-2 mb-1" id="homeTweetSection">
 	<div class="media col-12">
-		<img class="mr-2 img-fluid" src="{{ url_for('static', filename='images/logo.png') }}" width="100" height="100"
+		<img class="mr-2 img-fluid" src="{{ url_for('static', filename='images/logo.png') }}" width="50" height="50"
 			alt="User proflie pic">
-		<div class="media-body pb-3 align-self-center">
+		<div class="media-body t-0 pb-3 align-self-center">
 			<div class="row ml-2">
 				<input type="text" placeholder="What's happening?">
 			</div>
@@ -28,22 +28,22 @@
 	</div>
 </div>
 
-<div class="row">
-	<div class="card mt-5 p-0 col-12"
-		style="border: none; border-top: 1px solid lightgray; border-bottom: 1px solid lightgray">
+<div class="row" id="followingTweets">
+	<div class="card mt-4 p-0 col-12">
 		<ul class="list-group list-group-flush">
 			{% for i in posts.items %}
 			<li class="list-group-item">
 				<div class="media">
 					<img class="mr-2 img-fluid"
 						src="{{ url_for('static', filename='profile_pics/'+i.author.image_file) }}" width="50"
-						height="50" alt="Generic placeholder image">
+						height="50" alt="User profile picture">
 					<div class="media-body">
-						<p class="mt-0 text-muted">
+						<p class="mt-0 mr-1 text-muted col-12">
 							<a href="{{ url_for('user_tweets',username=i.author.username) }}"
 								class="card-title text-data-title">{{ i.author.username }}</a>
+							<small class="ml-auto">{{ i.date_posted.strftime('%Y-%m-%d') }}</small>
 						</p>
-						<p class="card-text text-data">
+						<p class="card-text text-data col-12">
 							<a href="{{ url_for('tweet',post_id=i.id) }}">{{ i.content }}
 							</a>
 						</p>
