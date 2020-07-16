@@ -32,7 +32,7 @@
 							<a class="nav-link fab fa-lg fa-twitter text-primary" href='#'></a>
 						</li>
 						<li class="nav-item mb-2 pl-sm-0 p-lg-1">
-							<a class="nav-link" href="#">
+							<a class="nav-link" href="{{ url_for('home') }}">
 								<span>
 									<i class="fa-lg fas fa-home"></i>
 								</span>
@@ -92,7 +92,7 @@
 							</a>
 						</li>
 						<li class="nav-item mb-2 p-lg-1">
-							<a class="nav-link" href="#">
+							<a class="nav-link" href="{{ url_for('profile') }}">
 								<span>
 									<i class="fa-lg fas fa-user"></i>
 								</span>
@@ -112,7 +112,7 @@
 							</a>
 						</li>
 						<li class="nav-item mb-2 p-lg-1" id="tweetButton">
-							<a class="btn btn-primary" role="button" href="#">Tweet</a>
+							<a class="btn btn-primary" role="button" href="{{ url_for('new_tweet') }}">Tweet</a>
 						</li>
 						<li class="nav-item mt-5 p-lg-1">
 							<div class="media row">
@@ -121,8 +121,8 @@
 								<div class="media-body ml-0 col pl-0 d-none d-lg-block">
 									<div class="row ml-0">
 										<div class="ml-0 col-8">
-											<b>User name</b>
-											@username
+											<b>{{ current_user.username }}</b>
+											{{ current_user.email }}
 										</div>
 										<div class="offset-1 pr-0 mr-0 col">
 											<i class="fas fa-lg fa-arrow-circle-down"></i>
