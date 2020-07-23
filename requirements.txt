@@ -1,0 +1,10 @@
+Flask==1.2
+Jinja2==2.11.2
+Flask-Bcrypt==0.7.1
+Flask-SQLAlchemy==2.4.4
+Flask-LoginManager==1.1.6
+Flask-Mail==0.9.1
+Flask-WTF==0.14.3
+WTForms==2.3.1
+itsdangerous==1.1.0
+Pillow==7.2.0
