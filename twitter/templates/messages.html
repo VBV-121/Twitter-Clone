@@ -1,4 +1,31 @@
 {% extends "layout.html" %}
 {% block content %}
 		<h1>Messages Page</h1>
+		<style type="text/css">
+			.img-size{
+				width: 10vw;
+			    height: 10vw;
+			    object-fit: cover;
+			}
+			</style>
+		<!-- (2) -->
+		<!-- box1: username display
+				user database
+		box2 : whats app
+					database from , to , display -->
+		{% for i in user %}
+			<ul class="col nav flex-column">
+					<li class="nav-item mb-2 pl-sm-0 p-lg-1">
+						<a class="nav-link" href="{{ url_for('chat_room',username=i.username) }}">
+							<span>
+								<i class="fa-lg fas fa-user"></i>
+							</span>
+							<span class="d-none d-lg-inline">
+								<b class="">&nbsp;{{i.username}}</b>
+							</span>
+						</a>
+					</li>
+			</ul>
+		{% endfor %}
+
 {% endblock content %}

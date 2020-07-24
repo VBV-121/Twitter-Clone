@@ -3,23 +3,10 @@ import os
 from PIL import Image
 from flask import render_template, url_for, flash, redirect, request, abort
 from twitter import app, db, bcrypt, mail
-from twitter.forms import RegistrationForm, LoginForm, UpdateAccountForm, TweetForm, RequestResetForm, ResetPasswordForm
+from twitter.forms import RegistrationForm, LoginForm, UpdateAccountForm, TweetForm, RequestResetForm, ResetPasswordForm, MessageForm
 from flask_mail import Message
-from twitter.models import User, Post
+from twitter.models import User, Post, ChatMessages
 from flask_login import login_user, current_user, logout_user, login_required
-
-# tweets=[
-# 	{
-# 		'author':'vaibhav',
-# 		'tweet':'1st tweet',
-# 		'date_posted':'July 10,2020'
-# 	},
-# 	{
-# 		'author':'dharmi',
-# 		'tweet':'2st tweet',
-# 		'date_posted':'July 7,2020'
-# 	}
-# ]
 
 @app.route("/")
 
@@ -169,8 +156,34 @@ def notifications():
 	return render_template("notifications.html",title="Notification")
 
 @app.route("/messages")
+@login_required
 def messages():
-	return render_template("messages.html",title="Messages")
+	user = User.query.all()
+	return render_template("messages.html",title="Messages",user=user)
+
+@app.route("/chatroom/<string:username>",methods=['GET','POST'])
+@login_required
+def chat_room(username):
+	form = MessageForm()
+	if form.validate_on_submit():
+		post = ChatMessages(msg=form.msg.data, sender_text= current_user.username,receiver_text=username)
+		db.session.add(post)
+		db.session.commit()
+		print(username)
+		flash(f'Your message has been posted!','success')
+		return redirect(url_for('chat_room',username=username))
+	elif request.method == 'GET':
+		total=[]
+		sender=ChatMessages.query.filter_by(sender_text=current_user.username).all()
+		receiver=ChatMessages.query.filter_by(sender_text=username).all()
+		total = sender + receiver
+		for i in range(0,len(total)):
+			for j in range(i,len(total)):
+				if total[i].date_posted<total[j].date_posted:
+					total[i],total[j]=total[j],total[i]
+		total = total[::-1]
+		print(total)
+		return render_template('chat_room.html',title='Chat Room', form=form , legend='Chat Room',total=total)
 
 @app.route("/bookmarks")
 def bookmarks():
@@ -182,7 +195,7 @@ def lists():
 
 def send_reset_email(user):
 	token = user.get_rest_token()
-	msg = Message('Password Reset Request', sender='nimitmehta378@gmail.com', recipients=[user.email])
+	msg = Message('Password Reset Request', sender='vghadiali18@gmail.com', recipients=[user.email])
 	msg.body = f''' To reset your password, visit the following link:
 {url_for('reset_token', token=token,_external= True)}
 '''

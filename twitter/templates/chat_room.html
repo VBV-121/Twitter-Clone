@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+{% block content %}
+  <div class="container ">
+  	<div class="msg-header">
+  		<div class="msg-header-img">
+  		</div>
+  		<div class="active">
+  			<h4>Name</h4>
+  		</div>
+  		<div class="header-icons">
+  			<i class="fa fa-phone"></i>
+  			<i class="fa fa-video-camera"></i>
+  			<i class="fa fa-info-circle"></i>
+  	  </div>
+    </div>
+
+    <div class="chat-page">
+    	<div class="msg-inbox">
+        {% for i in total %}
+        <p>{{i.msg}}</p>
+        <br>
+        {% endfor %}
+
+  </div>
+  <form method="POST" action="">
+      {{ form.hidden_tag() }}
+  <div class="msg-bottom">
+  	<div class="input-group">
+  		{{ form.msg(class="form-control form-control-lg",placeholder="Write a message",type="text") }}
+  		<div class="form-group">
+          {{ form.submit(class="ml-4 btn btn-primary") }}
+        </div>
+  	</div>
+  </div>
+</form>
+  </div>
+  </div>
+{% endblock %}

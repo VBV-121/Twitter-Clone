@@ -39,3 +39,13 @@ class Post(db.Model):
 
 	def __repr__(self):
 		return f"User('{self.date_posted}')"
+
+class ChatMessages(db.Model):
+	id = db.Column(db.Integer,primary_key=True)
+	date_posted = db.Column(db.DateTime,nullable=False,default=datetime.utcnow)
+	msg = db.Column(db.Text,nullable=False)
+	sender_text = db.Column(db.String(50), nullable=False)
+	receiver_text = db.Column(db.String(50),nullable=False)
+	
+	def __repr__(self):
+		return f"User('{self.date_posted}')"

@@ -20,7 +20,11 @@
 							{% if form.email.errors %}
 								{{ form.email(class="form-control form-control-lg is-invalid") }}
 								<div class="invalid-feedback">
-									{% for error in form.email.errors %}
+									{% for created = db.Column(
+        db.DateTime,
+        index=False,
+        unique=False,
+        nullable=Falseerror in form.email.errors %}
 										<span>{{ error }}</span>
 									{% endfor %}
 								</div>
