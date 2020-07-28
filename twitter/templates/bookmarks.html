@@ -1,4 +1,23 @@
 {% extends "layout.html" %}
 {% block content %}
-		<h1>Bookmarks Page</h1>
+	<h1>Bookmark Page</h1>
+	{% for i in range(0,posts|length) %}
+		<li class="list-group-item">
+			<div class="media">
+				<img class="mr-2 img-fluid"
+					src="{{ url_for('static', filename='profile_pics/'+ users[i].image_file ) }}" width="50"
+					height="50" alt="User profile picture">
+				<div class="media-body">
+					<p class="mt-0 mr-1 text-muted col-12">
+						<a href="#"
+							class="card-title text-data-title">{{ users[i].username }}</a>
+					</p>
+					<p class="card-text text-data col-12">
+						<a href="#">{{ posts[i] }}
+						</a>
+					</p>
+				</div>
+			</div>
+		</li>
+	{% endfor %}
 {% endblock content %}

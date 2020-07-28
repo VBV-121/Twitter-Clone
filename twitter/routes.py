@@ -5,7 +5,7 @@ from flask import render_template, url_for, flash, redirect, request, abort
 from twitter import app, db, bcrypt, mail
 from twitter.forms import RegistrationForm, LoginForm, UpdateAccountForm, TweetForm, RequestResetForm, ResetPasswordForm, MessageForm
 from flask_mail import Message
-from twitter.models import User, Post, ChatMessages
+from twitter.models import User, Post, ChatMessages, Bookmark
 from flask_login import login_user, current_user, logout_user, login_required
 
 @app.route("/")
@@ -187,7 +187,17 @@ def chat_room(username):
 
 @app.route("/bookmarks")
 def bookmarks():
-	return render_template("bookmarks.html",title="Bookmarks")
+	posts=[]
+	users=[]
+	bookmark = Bookmark.query.all()
+	for i in bookmark:
+		if i.user_id == current_user.id:
+			temp=Post.query.filter_by(id=i.post_id).first()
+			if temp.content not in posts:
+				posts.append(temp.content)
+				temp1=User.query.filter_by(id= i.user_id).first()
+				users.append(temp1)
+	return render_template('bookmarks.html',title="Bookmark",posts=posts,users=users)
 
 @app.route("/lists")
 def lists():
@@ -230,3 +240,15 @@ def reset_token(token):
 		flash(f'Password Updated!','success')
 		return redirect(url_for('login'))
 	return render_template('reset_token.html', title='Reset Password',form=form)
+
+@app.route("/tweet/<int:post_id>/bookmark",methods=['GET','POST'])
+@login_required
+def bookmark_save(post_id):
+	post = Post.query.get_or_404(post_id)
+	if post:
+		bookmark = Bookmark(post_id=post_id, user_id=current_user.id)
+		db.session.add(bookmark)
+		db.session.commit()
+		flash(f'New bookmark added','success')
+		return render_template('bookmarks.html',title="Bookmark")
+	#elif request.method == 'GET':

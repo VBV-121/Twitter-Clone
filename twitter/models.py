@@ -46,6 +46,13 @@ class ChatMessages(db.Model):
 	msg = db.Column(db.Text,nullable=False)
 	sender_text = db.Column(db.String(50), nullable=False)
 	receiver_text = db.Column(db.String(50),nullable=False)
-	
+
 	def __repr__(self):
 		return f"User('{self.date_posted}')"
+
+class Bookmark(db.Model):
+	id = db.Column(db.Integer,primary_key=True)
+	post_id = db.Column(db.Integer, nullable=False)
+	user_id = db.Column(db.Integer, nullable=False)
+	def __repr__(self):
+		 return f"Bookmark('{self.post_id}')"
