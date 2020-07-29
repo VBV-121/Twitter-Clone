@@ -54,5 +54,7 @@ class Bookmark(db.Model):
 	id = db.Column(db.Integer,primary_key=True)
 	post_id = db.Column(db.Integer, nullable=False)
 	user_id = db.Column(db.Integer, nullable=False)
+	main_user_id = db.Column(db.Integer, nullable=False)
+	
 	def __repr__(self):
 		 return f"Bookmark('{self.post_id}')"

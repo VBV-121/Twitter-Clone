@@ -191,7 +191,7 @@ def bookmarks():
 	users=[]
 	bookmark = Bookmark.query.all()
 	for i in bookmark:
-		if i.user_id == current_user.id:
+		if i.main_user_id == current_user.id:
 			temp=Post.query.filter_by(id=i.post_id).first()
 			if temp.content not in posts:
 				posts.append(temp.content)
@@ -241,14 +241,13 @@ def reset_token(token):
 		return redirect(url_for('login'))
 	return render_template('reset_token.html', title='Reset Password',form=form)
 
-@app.route("/tweet/<int:post_id>/bookmark",methods=['GET','POST'])
+@app.route("/tweet/<int:post_id><int:user_id>/bookmark",methods=['GET','POST'])
 @login_required
-def bookmark_save(post_id):
+def bookmark_save(post_id,user_id):
 	post = Post.query.get_or_404(post_id)
 	if post:
-		bookmark = Bookmark(post_id=post_id, user_id=current_user.id)
+		bookmark = Bookmark(post_id=post_id, user_id=user_id, main_user_id=current_user.id)
 		db.session.add(bookmark)
 		db.session.commit()
 		flash(f'New bookmark added','success')
-		return render_template('bookmarks.html',title="Bookmark")
-	#elif request.method == 'GET':
+		return redirect(url_for('bookmarks'))
