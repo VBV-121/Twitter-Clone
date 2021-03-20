@@ -1,5 +1,5 @@
 Flask==1.2
-Jinja2==2.11.2
+Jinja2==2.11.3
 Flask-Bcrypt==0.7.1
 Flask-SQLAlchemy==2.4.4
 Flask-LoginManager==1.1.6
